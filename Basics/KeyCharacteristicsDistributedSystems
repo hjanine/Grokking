@@ -1,0 +1,10 @@
+Key Characteristics of Distributed Systems
+
+Scalability: 
+	The capability of a system to grow and manage increased demand.
+	A system that can contibuously evolve to support growing amount of work.
+	Horizontal scaling: Adding more server.
+	Vertical scaling: Add more resource(CPU, RAM, storage, etc) to an existing server.
+
+Reliability
+	
