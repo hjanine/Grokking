@@ -1,0 +1,14 @@
+Load Balancing
+
+Help scale horizontally across an ever-increasing number of servers.
+
+LB locations: 
+	Between user and web server
+	Between web servers and an internal platform layer(application server, cache server).
+	Between internal platform layer and datyabase.
+
+Alrorithms: Least connection, response time, bandwidth, Round robin, IP hash
+
+Implementation: Smart clients; Hardware load balancers; Software load balancers
+
+

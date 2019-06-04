@@ -1,0 +1,24 @@
+Caching
+
+* Take advantage of the locality of reference principle: recently requested data is likely to be requested again.
+
+
+Application server cache: 
+	Cache placed on a request layer node.
+	When a request layer node is expanded to many nodes
+		LB randomly distributes requests across teh nodes.
+		The same req can go diff nodes.
+		Increase cache misses.
+		Solutions: 
+			Global caches
+			Distributed caches
+
+
+Distributed cache
+	Each request layer node owns part of the cached data.
+	Entire cache is divided up using a consistent hashing function.
+	Pro
+		Cache space can be increased easily by adding more nodes to the request pool.
+	Con
+		A missing node leads to cache lost.
+

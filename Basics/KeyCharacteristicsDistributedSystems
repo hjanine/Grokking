@@ -6,5 +6,12 @@ Scalability:
 	Horizontal scaling: Adding more server.
 	Vertical scaling: Add more resource(CPU, RAM, storage, etc) to an existing server.
 
-Reliability
+Reliability:
+	Reliability is the probability that a system will fail in a given period. 在某段时间fail的可能性。
+	A distributed system is reliable if it keeps delivering its service even when one or multiple components fail. 如果一个分布式系统，在某些部分fail的情况下还能delivering service，那么这个系统就是reliable的。
+Availability:  
+	the time a system remains operational to perform its required function in a specific period
+Efficiency:
+	Latency: response time
+	Bandwith: amount of data delivered in a given time.
 	
