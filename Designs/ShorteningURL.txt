@@ -1,0 +1,67 @@
+Shortening URL
+
+Clarify the requirements: 
+	Functional Requirements --
+		* Generate a shorter URL according to the given URL.
+		* Redirect to the original link when accessing a short link.
+		* Users should optionally be able to pick a custom short link for their URL.
+		* Links wil expire after a standard default timespan. Users should also be able to specify the expiration time.
+
+Estimation capacity and Constraints:
+ 	* Assumption： Read-heavy. More redirection req than creating new short URLs. Assum 100 : 1 between read and write; Assuming 500 million new URLs per month.
+ 	
+ 	* Traffic Estimation: 
+ 		500M(5亿) new URL shortening per month, 100 * 500M => 50B redirections per month. (因为100 ： 1) 
+ 		-- New URL shorteningper second: 500 M / (30 days * 24 hours * 3600 sec) = ~200 URL/s
+ 		-- URL redirections per second: 50 B / (30 days * 24 hours * 3600 sec) = ~19K URL/s
+
+ 	* Storage estimates: 
+ 		Assuming storing every URL shortening request for 5 years, each object takes 500 bytes.
+ 		Total objects: 500 million * 5 years * 12 months = 30 billion --> 5年共有这么多URL产生
+ 		Total storage: 30 billion * 500 bytes = 15 TB
+
+ 	* Bandwidth estimates
+ 		-- Write: 200 URL/s * 500 bytes/URL = 100 KB/s --> 1秒的create new URL 需要多少带宽
+ 		-- Read: 19K URL/s * 500 bytes/URL = ~9 MB/s --> 1秒的redirection 需要多少带宽
+
+ 	* Cache memory estimates
+ 		80-20 rule, assuming 20% of URLs generate 80% of traffic, cache 20% hot URLs.
+ 		Request per day: 19K * 3600 seconds * 24 hours = ~1.7 billion/day
+ 		Cache 20%: 0.2 * 1.7 billion * 500 bytes = ~170GB
+
+
+ System APIs
+ 	String CreateUrl(String api_dev_key, String original_url, String custom_alias, String user_name, String expire_date) {} 
+ 
+ 	String deleteUrl(String api_dev_key, String url_key) {} --> url_key is the Short URL --> A successful deletion returns ‘URL Removed’.
+
+ Databse Design
+ 	 * Observations: Need to store billions of records; Each obj is small(less than 1k); No relationships between records; Read heavy; A NoSQL choice would be easier to scale; Comment: SQL with sharding should also work.
+
+ Basic system design and algorithm
+ 	Encoding actual URL
+ 		* Compute unique hash: 
+ 			base64
+ 			6 letters: 64 ^ 6 = ~68.7 billion 种排列组合
+ 			8 letters： 64 ^ 8 = ~281 trillion
+
+
+ 	Generating keys offline
+ 		* Standalone Key Generation Service (KGS) 
+ 			-- Generate random 6 letter Strings and store them in a database.
+ 			-- When a short URL is needed, take one from key DB.
+ 			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
